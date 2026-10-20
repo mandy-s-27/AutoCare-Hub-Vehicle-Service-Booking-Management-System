@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login · Bike Service Booking System</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="logo">🚗 Mandy Bikserv</div>
+    <p>Bike Service Booking &amp; Management System</p>
+
+    <div class="role-tabs" id="roleTabs">
+      <button type="button" class="active" data-role="CUSTOMER">Customer</button>
+      <button type="button" data-role="MECHANIC">Mechanic</button>
+      <button type="button" data-role="ADMIN">Admin</button>
+    </div>
+
+    <div id="msgBox"></div>
+
+    <form id="loginForm">
+      <label for="email">Email</label>
+      <input type="email" id="email" required placeholder="you@example.com">
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required placeholder="••••••••">
+
+      <button type="submit" class="btn btn-primary" style="width:100%;margin-top:8px;">Sign In</button>
+    </form>
+
+    <p id="registerHint" style="text-align:center;margin-top:var(--space-md);font-size:14px;">
+      New customer? <a href="pages/register.html">Create an account</a>
+    </p>
+    <p style="text-align:center;font-size:12px;color:var(--outline);margin-top:4px;">
+      
+    </p>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script>
+  let selectedRole = "CUSTOMER";
+  document.querySelectorAll("#roleTabs button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#roleTabs button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      selectedRole = btn.dataset.role;
+      document.getElementById("registerHint").style.display = selectedRole === "CUSTOMER" ? "block" : "none";
+    });
+  });
+
+  // If already logged in, go straight to the right dashboard
+  (function redirectIfLoggedIn() {
+    const user = Auth.getUser();
+    if (user && Auth.getToken()) {
+      goToDashboard(user.role);
+    }
+  })();
+
+  function goToDashboard(role) {
+    if (role === "CUSTOMER") window.location.href = "pages/customer-dashboard.html";
+    else if (role === "MECHANIC") window.location.href = "pages/mechanic-dashboard.html";
+    else if (role === "ADMIN") window.location.href = "pages/admin-dashboard.html";
+  }
+
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msgBox = document.getElementById("msgBox");
+    msgBox.innerHTML = "";
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    try {
+      const res = await apiCall("/auth/login", "POST", { email, password }, false);
+      if (res.role !== selectedRole) {
+        showMessage(msgBox, `This account is registered as ${res.role.toLowerCase()}, not ${selectedRole.toLowerCase()}. Select the correct tab.`);
+        return;
+      }
+      Auth.setSession(res);
+      goToDashboard(res.role);
+    } catch (err) {
+      showMessage(msgBox, err.message || "Login failed. Please check your credentials.");
+    }
+  });
+</script>
+</body>
+</html>
+ -- mechanic-dashboard
+ -- eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0bWVjaGFuaWNAZ21haWwuY29tIiwicm9sZSI6Ik1FQ0hBTklDIiwiaWQiOjcsImlhdCI6MTc5MjQ5NTA1NywiZXhwIjoxNzkyNTgxNDU3fQ.loRG6o9zRMHKSTd5uqadnKR9joEwuhuo4J9qCzEkzzg
+ -- cu
+ -- eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0ZXJAZ21haWwuY29tIiwicm9sZSI6IkNVU1RPTUVSIiwiaWQiOjQsImlhdCI6MTc5MjQ5NTMwNywiZXhwIjoxNzkyNTgxNzA3fQ.DGvnVDIabnT5i8bP9OED7Kja_aU1wyOxik8Kw7cThhc
+
+ eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbm1hZGhhbkB2ZWhpY2xlc2VydmljZS5jb20iLCJyb2xlIjoiQURNSU4iLCJpZCI6MSwiaWF0IjoxNzkyNDk2NTAwLCJleHAiOjE3OTI1ODI5MDB9.-8fUIcN3WAh0YzdqwBUyXS9km6JZTKwqvD4c-HiQdsk

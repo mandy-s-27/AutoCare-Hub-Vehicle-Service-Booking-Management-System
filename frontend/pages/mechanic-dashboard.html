@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mechanic Dashboard · Bikserv</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">🔧 Mandy Bikserv</div>
+    <nav>
+      <button data-view="jobs" class="active">Assigned Jobs</button>
+      <button data-view="completed">Completed Jobs</button>
+    </nav>
+    <button class="logout-btn" id="logoutBtn">⏻ Logout</button>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <h1 id="pageTitle">Assigned Jobs</h1>
+      <div class="user-chip" id="userChip">-</div>
+    </div>
+
+    <div id="globalMsg"></div>
+
+    <!-- ASSIGNED JOBS -->
+    <section class="view active" id="view-jobs">
+      <div class="card">
+        <h3>Assigned Vehicles &amp; Bookings</h3>
+        <table>
+          <thead><tr><th>ID</th><th>Vehicle</th><th>Service</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="jobsBody"><tr><td colspan="6">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- COMPLETED JOBS -->
+    <section class="view" id="view-completed">
+      <div class="card">
+        <h3>Completed / Delivered Jobs</h3>
+        <table>
+          <thead><tr><th>ID</th><th>Vehicle</th><th>Service</th><th>Date</th><th>Status</th></tr></thead>
+          <tbody id="completedBody"><tr><td colspan="5">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-backdrop hidden" id="modalBackdrop">
+  <div class="modal" id="modalBody"></div>
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/mechanic.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard · Mandy Bikserv</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">🛠️ Mandy Bikserv Admin</div>
+    <nav>
+      <button data-view="overview" class="active">Dashboard</button>
+      <button data-view="customers">Customers</button>
+      <button data-view="mechanics">Mechanics</button>
+      <button data-view="centers">Service Centers</button>
+      <button data-view="services">Services &amp; Prices</button>
+      <button data-view="bookings">All Bookings</button>
+      <button data-view="reports">Reports</button>
+    </nav>
+    <button class="logout-btn" id="logoutBtn">⏻ Logout</button>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <h1 id="pageTitle">Dashboard</h1>
+      <div class="user-chip" id="userChip">-</div>
+    </div>
+
+    <div id="globalMsg"></div>
+
+    <!-- OVERVIEW -->
+    <section class="view active" id="view-overview">
+      <div class="card-grid" id="reportCards"></div>
+    </section>
+
+    <!-- CUSTOMERS -->
+    <section class="view" id="view-customers">
+      <div class="card">
+        <h3>Customers</h3>
+        <table>
+          <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th></th></tr></thead>
+          <tbody id="customersBody"><tr><td colspan="5">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- MECHANICS -->
+    <section class="view" id="view-mechanics">
+      <div class="card">
+        <h3>Add Mechanic</h3>
+        <form id="mechanicForm">
+          <div class="form-row">
+            <div><label>Name</label><input id="mName" required></div>
+            <div><label>Specialization</label><input id="mSpec" placeholder="Engine, Electrical..."></div>
+          </div>
+          <div class="form-row">
+            <div><label>Phone</label><input id="mPhone"></div>
+            <div><label>Service Center</label><select id="mCenter"></select></div>
+          </div>
+          <div class="form-row">
+            <div><label>Email</label><input id="mEmail" type="email" required></div>
+            <div><label>Password</label><input id="mPassword" type="password" required></div>
+          </div>
+          <button type="submit" class="btn btn-primary">Add Mechanic</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3>All Mechanics</h3>
+        <table>
+          <thead><tr><th>ID</th><th>Name</th><th>Specialization</th><th>Center</th><th>Email</th><th></th></tr></thead>
+          <tbody id="mechanicsBody"><tr><td colspan="6">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SERVICE CENTERS -->
+    <section class="view" id="view-centers">
+      <div class="card">
+        <h3>Add Service Center</h3>
+        <form id="centerForm">
+          <div class="form-row">
+            <div><label>Name</label><input id="cName" required></div>
+            <div><label>City</label><input id="cCity" required></div>
+          </div>
+          <label>Address</label><input id="cAddress" required>
+          <button type="submit" class="btn btn-primary">Add Center</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3>All Service Centers</h3>
+        <table>
+          <thead><tr><th>ID</th><th>Name</th><th>Address</th><th>City</th><th></th></tr></thead>
+          <tbody id="centersBody"><tr><td colspan="5">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SERVICES & PRICES -->
+    <section class="view" id="view-services">
+      <div class="card">
+        <h3>Add Service</h3>
+        <form id="serviceForm">
+          <div class="form-row">
+            <div><label>Service Name</label><input id="sName" required></div>
+            <div><label>Price (₹)</label><input id="sPrice" type="number" step="0.01" required></div>
+          </div>
+          <label>Duration (minutes)</label><input id="sDuration" type="number">
+          <button type="submit" class="btn btn-primary">Add Service</button>
+        </form>
+      </div>
+      <div class="card">
+        <h3>All Services</h3>
+        <table>
+          <thead><tr><th>ID</th><th>Name</th><th>Price</th><th>Duration</th><th></th></tr></thead>
+          <tbody id="servicesBody"><tr><td colspan="5">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ALL BOOKINGS -->
+    <section class="view" id="view-bookings">
+      <div class="card">
+        <h3>All Bookings</h3>
+        <table>
+          <thead><tr><th>ID</th><th>Customer</th><th>Vehicle</th><th>Service</th><th>Center</th><th>Status</th><th>Mechanic</th><th></th></tr></thead>
+          <tbody id="bookingsBody"><tr><td colspan="8">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- REPORTS -->
+    <section class="view" id="view-reports">
+      <div class="card">
+        <h3>System Reports</h3>
+        <div class="card-grid" id="reportCards2"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-backdrop hidden" id="modalBackdrop">
+  <div class="modal" id="modalBody"></div>
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/admin.js"></script>
+</body>
+</html>

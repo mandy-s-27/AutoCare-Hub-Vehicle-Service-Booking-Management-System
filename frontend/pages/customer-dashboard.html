@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Dashboard · Mandy Bikserv</title>
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">🚗 Mandy Bikserv</div>
+    <nav>
+      <button data-view="overview" class="active">Dashboard</button>
+      <button data-view="vehicles">My Vehicles</button>
+      <button data-view="book">Book Service</button>
+      <button data-view="history">Booking History</button>
+      <button data-view="track">Track Service</button>
+      <button data-view="profile">Profile</button>
+    </nav>
+    <button class="logout-btn" id="logoutBtn">⏻ Logout</button>
+  </aside>
+
+  <main class="main-content">
+    <div class="topbar">
+      <h1 id="pageTitle">Dashboard</h1>
+      <div class="user-chip" id="userChip">-</div>
+    </div>
+
+    <div id="globalMsg"></div>
+
+    <!-- OVERVIEW -->
+    <section class="view active" id="view-overview">
+      <div class="card-grid">
+        <div class="card stat-card">
+          <div class="stat-value" id="statVehicles">-</div>
+          <div class="stat-label">My Vehicles</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-value" id="statBookings">-</div>
+          <div class="stat-label">Total Bookings</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-value" id="statActive">-</div>
+          <div class="stat-label">Active Services</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Recent Bookings</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Service</th>
+              <th>Vehicle</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="recentBookingsBody">
+            <tr><td colspan="4">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- VEHICLES -->
+    <section class="view" id="view-vehicles">
+      <div class="card">
+        <h3>Add a Vehicle</h3>
+        <form id="vehicleForm">
+          <div class="form-row">
+            <div>
+              <label>Vehicle Number</label>
+              <input id="vNumber" required placeholder="TN 37 AB 1234">
+            </div>
+            <div>
+              <label>Model</label>
+              <input id="vModel" required placeholder="Activa 6G">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div>
+              <label>Company</label>
+              <input id="vCompany" required placeholder="Honda">
+            </div>
+            <div>
+              <label>Fuel Type</label>
+              <select id="vFuel">
+                <option value="Petrol">Petrol</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Electric">Electric</option>
+                <option value="CNG">CNG</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Add Vehicle</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>My Vehicles</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Number</th>
+              <th>Model</th>
+              <th>Company</th>
+              <th>Fuel</th>
+            </tr>
+          </thead>
+          <tbody id="vehiclesBody">
+            <tr><td colspan="4">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- BOOK SERVICE -->
+    <section class="view" id="view-book">
+      <div class="card">
+        <h3>Book a Service</h3>
+
+        <form id="bookForm">
+          <label for="bVehicle">Vehicle</label>
+          <select id="bVehicle" required></select>
+
+          <label for="bCenter">Service Center</label>
+          <select id="bCenter" required></select>
+
+          <label for="bService">Service</label>
+          <select id="bService" required></select>
+
+          <!-- NEW: Customer complaint description -->
+          <label for="bComplaint">Describe the Vehicle Problem</label>
+          <textarea
+            id="bComplaint"
+            name="complaintDescription"
+            rows="4"
+            maxlength="2000"
+            placeholder="Example: My bike makes an unusual noise when I apply the brakes."
+          ></textarea>
+
+          <div class="form-row">
+            <div>
+              <label for="bDate">Date</label>
+              <input type="date" id="bDate" required>
+            </div>
+            <div>
+              <label for="bTime">Time</label>
+              <input type="time" id="bTime" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Confirm Booking</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="view" id="view-history">
+      <div class="card">
+        <h3>Booking History</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Date</th>
+              <th>Service</th>
+              <th>Center</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="historyBody">
+            <tr><td colspan="6">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TRACK -->
+    <section class="view" id="view-track">
+      <div class="card">
+        <h3>Track Service Status</h3>
+        <label for="trackSelect">Select Booking</label>
+        <select id="trackSelect"></select>
+        <div id="trackResult" style="margin-top:var(--space-lg);"></div>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section class="view" id="view-profile">
+      <div class="card">
+        <h3>Profile</h3>
+        <p><strong>Name:</strong> <span id="pName">-</span></p>
+        <p><strong>Email:</strong> <span id="pEmail">-</span></p>
+        <p style="font-size:13px;color:var(--outline);">
+          Profile editing is not part of this MVP - contact support to update details.
+        </p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Invoice / Review modal -->
+<div class="modal-backdrop hidden" id="modalBackdrop">
+  <div class="modal" id="modalBody"></div>
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/customer.js"></script>
+</body>
+</html>
