@@ -1,0 +1,16 @@
+package com.vehicleservice.entity;
+
+public enum BookingStatus {
+    PENDING,
+    CONFIRMED,
+    RECEIVED,
+    INSPECTION_COMPLETED,
+    REPAIR_STARTED,
+    WAITING_FOR_SPARE_PARTS,
+    REPAIR_COMPLETED,
+    READY_FOR_DELIVERY,
+    IN_PROGRESS,
+    COMPLETED,
+    DELIVERED,
+    CANCELLED
+}
